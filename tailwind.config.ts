@@ -11,6 +11,14 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brand: {
+  				DEFAULT: '#FF6200',
+  				background: '#FFEFE3',
+  				secondary: '#FFB658'
+  			},
+      },
+      fontFamily: {
+        itim: "var(--font-itim)", 
       },
     },
   },
