@@ -5,7 +5,7 @@ const Tokens = ({ tokens }: {tokens: Token[]}) => {
   return  tokens.length > 0 ? (
         tokens.map((token,index) => (
           <div key={index} className='w-full p-3 bg-brand-background mb-2 rounded-xl'>
-            {token.mint.toString()}
+            {token.mint}
           </div>
         ))
       ) : (
