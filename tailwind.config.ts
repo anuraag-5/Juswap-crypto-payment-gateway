@@ -17,6 +17,9 @@ export default {
   				secondary: '#FFB658'
   			},
       },
+      screens: {
+        'xl-custom': '1579px',
+      },
       fontFamily: {
         itim: "var(--font-itim)", 
       },

@@ -1,21 +1,17 @@
 "use client";
 
-import { UnifiedWalletButton } from "@jup-ag/wallet-adapter";
+import { useRouter } from "next/navigation";
+import { useWallet } from "@jup-ag/wallet-adapter";
+import Connect from "@/components/Connect";
 
-const ExampleBaseOnly = () => {
-  return (
-    <div>
-      <div className="mb-[11px] text-3xl">Connect Wallet</div>
-      <UnifiedWalletButton
-        buttonClassName="!bg-brand-background"
-        overrideContent={
-          <button className="bg-brand-secondary lg:w-[450px] text-[#FF6200] rounded-full p-4">
-            Connect
-          </button>
-        }
-      />
-    </div>
-  );
-};
+const Page = () => {
+    const router = useRouter();
+    const { connected } = useWallet();
+    if(connected) router.push("/your-tokens");
 
-export default ExampleBaseOnly;
+    return <Connect />
+} 
+
+
+export default Page;
+

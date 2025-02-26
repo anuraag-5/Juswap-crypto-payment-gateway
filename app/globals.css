@@ -2,9 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  @apply font-itim min-h-screen
+
+@layer base {
+  * {
+    @apply scroll-smooth;
+  }
+
+  body{
+    @apply font-itim min-h-screen
+  }
+
+  .remove-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 0px;
+  }
+
+  .remove-scrollbar::-webkit-scrollbar-thumb:hover {
+    /* background: #1e2238; */
+    background: transparent;
+  }
 }
 
+
 @layer utilities {
+  
+  .shad-no-focus {
+    @apply outline-none ring-offset-transparent focus:ring-transparent focus:ring-offset-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+  }
+  .shad-input {
+    @apply border-none shadow-none p-0 shad-no-focus !important;
+  }
 }
