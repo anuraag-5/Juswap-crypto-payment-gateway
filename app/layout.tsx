@@ -20,7 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={itim.className + ` antialiased remove-scrollbar`}>{children}</body>
+      <body className={itim.className + ` antialiased remove-scrollbar`}>
+        {children}
+      </body>
     </html>
   );
 }

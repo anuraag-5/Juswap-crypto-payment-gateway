@@ -1,0 +1,29 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_64_47)">
+<mask id="mask0_64_47" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="50" height="50">
+<path d="M50 0H0V50H50V0Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_64_47)">
+<path d="M7.57267 37.7725C7.85392 37.3749 8.24064 37.1429 8.65076 37.1429H45.8461C46.5258 37.1429 46.8656 38.3027 46.3852 38.982L39.0375 49.3705C38.7563 49.768 38.3695 50 37.9594 50H0.76408C0.0843934 50 -0.25545 48.8402 0.225019 48.1609L7.57267 37.7725Z" fill="url(#paint0_linear_64_47)"/>
+<path d="M7.57267 0.629603C7.86564 0.231959 8.25236 0 8.65076 0H45.8461C46.5258 0 46.8656 1.15979 46.3852 1.8391L39.0375 12.2275C38.7563 12.6252 38.3695 12.8571 37.9594 12.8571H0.76408C0.0843934 12.8571 -0.25545 11.6973 0.225019 11.018L7.57267 0.629603Z" fill="url(#paint1_linear_64_47)"/>
+<path d="M41.8782 19.2653C41.5764 18.8803 41.1615 18.6557 40.7215 18.6557H0.817048C0.0878548 18.6557 -0.276742 19.7786 0.238723 20.4363L8.12154 30.494C8.42328 30.879 8.83818 31.1036 9.27818 31.1036H49.1827C49.9118 31.1036 50.2764 29.9807 49.761 29.323L41.8782 19.2653Z" fill="url(#paint2_linear_64_47)"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_64_47" x1="42.2929" y1="-7.84972" x2="-0.0949576" y2="49.575" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<linearGradient id="paint1_linear_64_47" x1="31.037" y1="-14.5143" x2="-11.3508" y2="42.9105" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<linearGradient id="paint2_linear_64_47" x1="39.2944" y1="-10.0558" x2="-0.334562" y2="49.4354" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00FFA3"/>
+<stop offset="1" stop-color="#DC1FFF"/>
+</linearGradient>
+<clipPath id="clip0_64_47">
+<rect width="50" height="50" fill="white"/>
+</clipPath>
+</defs>
+</svg>

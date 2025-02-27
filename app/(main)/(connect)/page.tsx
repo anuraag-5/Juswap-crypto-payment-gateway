@@ -6,8 +6,8 @@ import Connect from "@/components/Connect";
 
 const Page = () => {
     const router = useRouter();
-    const { connected } = useWallet();
-    if(connected) router.push("/your-tokens");
+    const { publicKey, connected } = useWallet();
+    if(connected) router.push(`/your-tokens?publicKey=${publicKey}`);
 
     return <Connect />
 } 
