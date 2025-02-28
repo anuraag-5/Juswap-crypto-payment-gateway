@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Itim } from "next/font/google";
 import "./globals.css";
+import { ConnectionProvider } from "@/context/ConnectionContext";
+import { ConnectionProvider2 } from "@/context/ConnectionContext2";
 
 const itim = Itim({
   weight: "400",

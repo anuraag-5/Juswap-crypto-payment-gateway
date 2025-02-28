@@ -1,4 +1,4 @@
-import { PublicKey, Transaction } from "@solana/web3.js";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 
 export interface Token {
   ata: string;
@@ -7,6 +7,7 @@ export interface Token {
 }
 
 export interface TransferTokenParams {
+  connection?: Connection;
   sender: PublicKey;
   recipientAddress: string;
   tokenMint: string;

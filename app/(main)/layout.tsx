@@ -12,7 +12,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         wallets={[]}
         config={{
           autoConnect: false,
-          env: "mainnet-beta",
+          env: "devnet",
           metadata: {
             name: "UnifiedWallet",
             description: "UnifiedWallet",
