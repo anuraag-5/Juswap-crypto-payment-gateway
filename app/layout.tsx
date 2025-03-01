@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Itim } from "next/font/google";
 import "./globals.css";
-import { ConnectionProvider } from "@/context/ConnectionContext";
-import { ConnectionProvider2 } from "@/context/ConnectionContext2";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const itim = Itim({
   weight: "400",

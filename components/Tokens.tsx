@@ -1,5 +1,4 @@
 import { Token } from "@/lib/types";
-import React, { useEffect, useState } from "react";
 import { TokensData } from "@/lib/constants";
 import Image from "next/image";
 

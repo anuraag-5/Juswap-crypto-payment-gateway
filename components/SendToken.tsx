@@ -10,23 +10,29 @@ import { useRouter } from "next/navigation";
 
 const SendToken = ({ tokens }: { tokens: Token[] }) => {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState("");
+  const [selected, setSelected] = useState<
+    | { mint: string; symbol: string; image: string; decimals: number }
+    | {
+        ata: string;
+        mint: string;
+        amount: string;
+        decimals: number;
+      }
+    | null
+  >(null);
   const refAmount = useRef<HTMLInputElement | null>(null);
   const refAddress = useRef<HTMLInputElement | null>(null);
   const refDecimal = useRef<HTMLInputElement | null>(null);
-  const { publicKey, signTransaction, sendTransaction } = useWallet();
-
-  // It is really advised 👋 to use a wallet like phantom to transfer
-  // token and testing this app as this feature is tested only in
-  // devnet else ensure correct decimal is entered.
+  const { publicKey, signTransaction } = useWallet();
 
   const handleSend = async () => {
     if (!publicKey || !signTransaction) {
       console.error("Wallet not connected");
       return;
     }
-
+    setIsLoading(true);
     const amount = refAmount.current?.value;
     const address = refAddress.current?.value;
     const decimal = refDecimal.current?.value;
@@ -55,11 +61,15 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
       await transferToken({
         sender: publicKey,
         recipientAddress: address,
-        tokenMint: selected,
+        tokenMint: selected.mint,
         decimals: Number(decimal),
         amount: Number(amount),
         signTransaction,
+        publicKey,
       });
+
+      setIsLoading(false);
+      router.push(`/your-tokens?publicKey=${publicKey}`);
     } catch (error) {
       console.error("Transaction failed:", error);
       router.push(`/your-tokens?publicKey=${publicKey}`);
@@ -74,20 +84,23 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
           onClick={() => setIsOpen(!isOpen)}
           className="px-4 py-2 bg-brand-secondary text-white rounded-xl"
         >
-          {selected
-            ? selected.length === 44
-              ? selected.substring(0, 6)
-              : selected
+          {selected && "symbol" in selected
+            ? selected.symbol
             : "Select an Option"}
         </button>
 
         {isOpen && (
           <ul className="relative left-0 mt-2 bg-brand-secondary rounded-xl shadow-md p-2">
             {tokens.map((token) => {
-              let found: { mint: string; symbol: string; image: string }[] = [];
+              let found: {
+                mint: string;
+                symbol: string;
+                image: string;
+                decimals: number;
+              }[] = [];
               for (let i = 0; i < TokensData.length; i++) {
                 if (TokensData[i].mint === token.mint)
-                  found.push(TokensData[i]);
+                  found.push({ ...TokensData[i], decimals: token.decimals });
               }
 
               if (found.length > 0)
@@ -96,7 +109,7 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
                     key={token.mint}
                     className="w-full p-3 bg-brand-background mb-2 rounded-xl flex justify-between h=[50px] items-center cursor-pointer"
                     onClick={() => {
-                      setSelected(found[0].mint);
+                      setSelected(found[0]);
                       setIsOpen(false);
                     }}
                   >
@@ -109,10 +122,7 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
                       />
                       <div className="text-brand">{found[0].symbol}</div>
                     </div>
-                    <div>
-                      {`${token.amount}`}
-                      <span className="text-brand "> {found[0].symbol}</span>
-                    </div>
+                    <div>{`$${token.amount}`}</div>
                   </li>
                 );
 
@@ -121,7 +131,7 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
                   key={token.mint}
                   className="w-full p-3 bg-brand-background mb-2 rounded-xl flex justify-between h=[50px] items-center cursor-pointer"
                   onClick={() => {
-                    setSelected(token.mint);
+                    setSelected({ ...token, symbol: "Unknown" });
                     setIsOpen(false);
                   }}
                 >
@@ -134,10 +144,7 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
                     />
                     <div className="text-brand">Unknown</div>
                   </div>
-                  <div>
-                    {`${token.amount}`}
-                    <span className="text-brand "> {"Unknown"}</span>
-                  </div>
+                  <div>{`$${token.amount}`}</div>
                 </li>
               );
             })}
@@ -163,11 +170,15 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
               />
             </div>
             <div className="flex flex-col gap-2 mb-2">
-              <div>Enter Decimals</div>
+              <div>Decimals</div>
               <input
                 className="w-full bg-brand-background py-5 px-2 rounded-xl"
                 ref={refDecimal}
-                placeholder="Google it"
+                value={
+                  (selected && "decimals" in selected && selected?.decimals) ||
+                  0
+                }
+                readOnly
               />
             </div>
           </div>
@@ -176,7 +187,17 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
               className="py-4 px-8 bg-brand rounded-full text-[#ffffff] text-xl"
               onClick={handleSend}
             >
-              Send
+              {isLoading ? (
+                <Image
+                  src="/loader.svg"
+                  alt="Swapping..."
+                  className="animate-spin"
+                  width={24}
+                  height={24}
+                />
+              ) : (
+                "Send"
+              )}
             </button>
           </div>
         </div>
@@ -192,7 +213,7 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="px-4 py-2 bg-brand-secondary text-white rounded-xl"
       >
-        {selected || "Select an option"}
+        Select an option
       </button>
 
       {isOpen && (
@@ -200,12 +221,12 @@ const SendToken = ({ tokens }: { tokens: Token[] }) => {
           <li
             key={1}
             onClick={() => {
-              setSelected("");
+              setSelected(null);
               setIsOpen(false);
             }}
             className="px-4 py-2 cursor-pointer"
           >
-            "You have no Token"
+            You have no Token
           </li>
         </ul>
       )}

@@ -40,105 +40,88 @@ export const TokensData = [
       image: "/orca-coin-2.svg"
   },
   {
-      mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCEcRokyzW",
+      mint: "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB",
       symbol: "USDT",
       image: "/tether-usdt-logo.svg"
   },
   {
-      mint: "mSoLzYCxHdYgdzU16g5QShvdiatQxKxQgKTVg9mxhNZ",
+      mint: "mSoLzYCxHdYgdzU16g5QSh3i5K3z3KZK7ytfqcJm7So",
       symbol: "mSOL",
       image: "/msol-coin-2.svg"
   },
   {
-      mint: "7dHbWXmcijvjjh58yxCheLDNZgiyUonFzQPBGj39t5X4",
+      mint: "J1toso1uCk3RLmjorhTtrVwY9HJ7X8V9yYac6Y7kGCPn",
       symbol: "JitoSOL",
-      image: "/unknown-coin.svg"
+      image: "/jitosol-coin.svg"
   },
   {
-      mint: "SLRSWMSP7UPJz9BTF8qDWm5T6KK5dBwALK49jNSzHVu",
-      symbol: "SLRS",
-      image: "/solrazr-coin.svg"
-  },
-  {
-      mint: "MangoCzJ36AjTLjcWJ3UBokZj97MPhJYmvNZWcncUac",
+      mint: "MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac",
       symbol: "MNGO",
       image: "/mango-coin.svg"
   },
   {
-      mint: "STEPNqZ4DQw59WDYpBihQyPPwhhKAKqvmjYdMRPUvhn",
+      mint: "7i5KKsX2weiTkry7jA4ZwSuXGhs5eJBEjY8vVxR4pfRx",
       symbol: "GMT",
       image: "/gmt-coin.svg"
   },
   {
-      mint: "GSTDWPXnWYfjjjD9mBSn26j9zhjU3Yxygq7wEaUf9pc",
+      mint: "AFbX8oGjGpmVFywbVouvhQSRmiW2aR1mohfahi4Y2AdB",
       symbol: "GST",
       image: "/gst-coin.svg"
   },
   {
-      mint: "MERt85fc5boKwU1QVEQgpRyf737hFZKuhKzGVVdRrGA",
-      symbol: "MER",
-      image: "/mercurial-coin.svg"
-  },
-  {
-      mint: "SBRne7HjAYhR9y2t5jczPoj9uDtjtY8Gg85hFej9izU",
+      mint: "iouQcQBAiEXe6cKLS85zmZxUqaCqBdeHFpqKoSz615u",
       symbol: "SBR",
       image: "/saber-coin.svg"
   },
   {
-      mint: "FTT9rKv7b9e6wKxWzZTbzNbtxMVkemsLCkziJjVuK56",
-      symbol: "FTT",
-      image: "/ftt-coin.svg"
+      mint: "GbBWwtYTMPis4VHb8MrBbdibPhn28TSrLB53KvUmb7Gi",
+      symbol: "wFTT",
+      image: "/wftt-coin.svg"
   },
   {
       mint: "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt",
       symbol: "SRM",
-      image: "/srm-coin.svg"
+      image: "/serum-coin.svg"
   },
   {
-      mint: "kinXdE9rERuxkj4eAttkE65EkV6LFii5saCEtYRuRQ6",
+      mint: "kinXdEcpDQeHPEuQnqmUgtYykqKGVFq6CeVX5iAHJq6",
       symbol: "KIN",
       image: "/kin-coin.svg"
   },
   {
-      mint: "CEREalTZv39eLs8fF9j2jRYjWNq3LRGjPDQf61mpjz",
-      symbol: "CERE",
-      image: "/cere-coin.svg"
-  },
-  {
-      mint: "ATLASXmbPQxBUYbxAXb39YstrZ8rkQC8r3r9j6o8CTyWP",
+      mint: "ATLASXmbPQxBUYbxPsV97usA3fPQYEqzQBUHgiFCUsXx",
       symbol: "ATLAS",
-      image: "/star-atlas-coin.svg"
+      image: "/atlas-coin.svg"
   },
   {
-      mint: "POLIS8XcRTg61owJgzGS8oXA6AKWCjb8qi5RLgkWKGd",
+      mint: "poLisWXnNRwC6oBu1vHiuKQzFjGL4XDSu4g9qjz9qVk",
       symbol: "POLIS",
-      image: "/star-atlas-polis-coin.svg"
+      image: "/polis-coin.svg"
   },
   {
-      mint: "SAMO8vH9ePQH8xDrm42Yq6K9jV9btzTLwDfZuJuNoeX",
+      mint: "7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU",
       symbol: "SAMO",
-      image: "/samoyedcoin-coin.svg"
+      image: "/samo-coin.svg"
   },
   {
-      mint: "whYyAMCsx7bzxKekW9xYyNSwzN7Q99y9vjZf939w2j",
-      symbol: "WHEY",
-      image: "/whey-coin.svg"
+      mint: "85VBFQZC9TZkfaptBWjvUw7YbZjy52A6mjtPGjstQAmQ",
+      symbol: "W",
+      image: "/w-coin.svg"
   },
   {
-      mint: "DUSTawucrTsGV8amHZqWantjv9RJyzTv5uehSan2vT8",
+      mint: "DUSTawucrTsGU8hcqRdHDCbuYhCPADMLM2VcCb8VnFnQ",
       symbol: "DUST",
-      image: "/dust-coin.svg"
+      image: "/unknown-coin.svg"
   },
   {
-      mint: "PRTq4HGxNGcZHmLk9o35ujAa44G2x2oDGKD9QhKek4L",
-      symbol: "PRT",
+      mint: "GeUX5oxR86Uge9T81NC7JXdRZ9rBhtbKCMN8WhZPpump",
+      symbol: "PARROT",
       image: "/parrot-coin.svg"
   },
   {
-      mint: "stSOLxxYx1c3TKmn9wJEj2r1o9bvpz5Q1L3HmgdqbLy",
+      mint: "7dHbWXmci3dT8UFYWYZweBLXgycu7Y3iL6trKn1Y7ARj",
       symbol: "stSOL",
-      image: "/lido-stsol-coin.svg"
+      image: "/stsol-coin.svg"
   },
 ];
-
-export const rpc_url = `https://solana-devnet.g.alchemy.com/v2/${process.env.RPC_API_KEY}`

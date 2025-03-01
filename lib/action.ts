@@ -2,10 +2,7 @@ import {
   Connection,
   PublicKey,
   Transaction,
-  ParsedInstruction,
-  ParsedTransactionWithMeta,
   TokenBalance,
-  clusterApiUrl,
   VersionedTransaction,
 } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID } from "@solana/spl-token";
@@ -15,20 +12,19 @@ import {
   createAssociatedTokenAccountInstruction,
   getAccount,
 } from "@solana/spl-token";
-import { TransferTokenParams } from "./types";
+import { Token, TransferTokenParams } from "./types";
 import { revalidatePath } from "next/cache";
-import { rpc_url } from "./constants";
-// let connection: Connection | null = null;
+
+export const rpc_url = `https://solana-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_RPC_API_KEY}`;
 
 export async function getWalletATAs(
-  walletAddress: PublicKey,
+  walletPublicKey: PublicKey,
   connection?: Connection | null
-) {
+): Promise<Token[]> {
   try {
     if (!connection) {
       connection = new Connection(rpc_url, "confirmed");
     }
-    const walletPublicKey = walletAddress;
 
     const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
       walletPublicKey,
@@ -37,18 +33,20 @@ export async function getWalletATAs(
       }
     );
 
-    const ATAs = tokenAccounts.value.map((accountInfo) => {
+    const ATAs: Token[] = tokenAccounts.value.map((accountInfo) => {
       const accountData = accountInfo.account.data.parsed.info;
       return {
-        ata: accountInfo.pubkey.toBase58(), // (ATA)
-        mint: accountData.mint, // Token mint address
-        amount: accountData.tokenAmount.uiAmount,
+        ata: accountInfo.pubkey.toBase58(),
+        mint: accountData.mint as string,
+        amount: accountData.tokenAmount.uiAmountString as string,
+        decimals: accountData.tokenAmount.decimals as number,
       };
     });
 
     return ATAs;
   } catch (error: any) {
     console.log(error.message);
+    return [];
   }
 }
 
@@ -60,6 +58,7 @@ export const transferToken = async ({
   amount,
   signTransaction,
   connection,
+  publicKey,
 }: TransferTokenParams) => {
   if (!connection) {
     connection = new Connection(rpc_url, "confirmed");
@@ -113,6 +112,8 @@ export const transferToken = async ({
     console.log(
       `✅ Transaction successful: https://solscan.io/tx/${signature}`
     );
+
+    revalidatePath(`/your-tokens?publicKey=${publicKey}`);
     return signature;
   } catch (error) {
     console.error("❌ Transaction failed:", error);
@@ -136,9 +137,10 @@ export const getLatestSignatures = async (
 
     let latestSignatures: {
       latestSignature: string;
-      mint: any;
+      mint: string;
       ata: string;
-      amount: any;
+      amount: string;
+      decimals: number;
     }[] = [];
     for (const walletATA of walletATAs) {
       const ataPublickey = new PublicKey(walletATA.ata);
@@ -219,7 +221,7 @@ export const getAndConfirmLatestTokenTransfer = async (
 
         if (parsedInstruction.destination === ata) {
           const tokenMintAddress = mint;
-          const amount = parsedInstruction.amount;
+          const amount = parsedInstruction.amount as string;
 
           tokenTransfers.push({
             signature: latestSignature,
@@ -253,58 +255,58 @@ export const createAndExecuteJupyterSwap = async (
     connection = new Connection(rpc_url, "confirmed");
   }
 
-  for (const swap of swaps) {
-    const quoteResponse = await (
-      await fetch(
-        `https://api.jup.ag/swap/v1/quote?inputMint=${swap.inputMint}&outputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&amount=${swap.rawAmount}&slippageBps=50&restrictIntermediateTokens=true`
-      )
-    ).json();
+  try {
+    for (const swap of swaps) {
+      const quoteResponse = await (
+        await fetch(
+          `https://api.jup.ag/swap/v1/quote?inputMint=${swap.inputMint}&outputMint=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&amount=${swap.rawAmount}&slippageBps=50&restrictIntermediateTokens=true`
+        )
+      ).json();
 
-    const swapResponse = await (
-      await fetch("https://api.jup.ag/swap/v1/swap", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // 'x-api-key': ''
-        },
-        body: JSON.stringify({
-          quoteResponse,
-          userPublicKey: publicKey,
-          dynamicComputeUnitLimit: true,
-          dynamicSlippage: true,
-          prioritizationFeeLamports: {
-            priorityLevelWithMaxLamports: {
-              maxLamports: 1000000,
-              priorityLevel: "veryHigh",
-            },
+      const swapResponse = await (
+        await fetch("https://api.jup.ag/swap/v1/swap", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // 'x-api-key': ''
           },
-        }),
-      })
-    ).json();
+          body: JSON.stringify({
+            quoteResponse,
+            userPublicKey: publicKey,
+            dynamicComputeUnitLimit: true,
+            dynamicSlippage: true,
+            prioritizationFeeLamports: {
+              priorityLevelWithMaxLamports: {
+                maxLamports: 1000000,
+                priorityLevel: "veryHigh",
+              },
+            },
+          }),
+        })
+      ).json();
 
-    console.log(swapResponse);
+      if (swapResponse.simulationError) {
+        return null;
+      }
 
-    if (swapResponse.simulationError) {
-      return false;
+      const transactionBase64 = swapResponse.swapTransaction;
+      const transaction = VersionedTransaction.deserialize(
+        Buffer.from(transactionBase64, "base64")
+      );
+
+      const signedTransaction = await signTransaction(transaction);
+
+      const transactionBinary = signedTransaction.serialize();
+
+      const signature = await connection.sendRawTransaction(transactionBinary, {
+        maxRetries: 2,
+        skipPreflight: true,
+      });
+
+      revalidatePath(path + `?publicKey=${publicKey}`);
+      return signature;
     }
-
-    const transactionBase64 = swapResponse.swapTransaction;
-    const transaction = VersionedTransaction.deserialize(
-      Buffer.from(transactionBase64, "base64")
-    );
-
-    const signedTransaction = await signTransaction(transaction);
-
-    const transactionBinary = signedTransaction.serialize();
-    console.log(transactionBinary);
-
-    const signature = await connection.sendRawTransaction(transactionBinary, {
-      maxRetries: 2,
-      skipPreflight: true,
-    });
-
-    console.log(signature);
+  } catch (error) {
+    return null;
   }
-  revalidatePath(path, "page");
-  return true;
 };
