@@ -17,7 +17,7 @@ import {
 } from "@solana/spl-token";
 import { TransferTokenParams } from "./types";
 import { revalidatePath } from "next/cache";
-
+import { rpc_url } from "./constants";
 // let connection: Connection | null = null;
 
 export async function getWalletATAs(
@@ -26,10 +26,7 @@ export async function getWalletATAs(
 ) {
   try {
     if (!connection) {
-      connection = new Connection(
-        "https://solana-devnet.g.alchemy.com/v2/ryTQis0V_mwGgV8HCAaP7PL0ouywGRJx",
-        "confirmed"
-      );
+      connection = new Connection(rpc_url, "confirmed");
     }
     const walletPublicKey = walletAddress;
 
@@ -65,10 +62,7 @@ export const transferToken = async ({
   connection,
 }: TransferTokenParams) => {
   if (!connection) {
-    connection = new Connection(
-      "https://solana-devnet.g.alchemy.com/v2/ryTQis0V_mwGgV8HCAaP7PL0ouywGRJx",
-      "confirmed"
-    );
+    connection = new Connection(rpc_url, "confirmed");
   }
   try {
     const recipientWallet = new PublicKey(recipientAddress);
@@ -131,10 +125,7 @@ export const getLatestSignatures = async (
   connection?: Connection
 ) => {
   if (!connection) {
-    connection = new Connection(
-      "https://solana-devnet.g.alchemy.com/v2/ryTQis0V_mwGgV8HCAaP7PL0ouywGRJx",
-      "confirmed"
-    );
+    connection = new Connection(rpc_url, "confirmed");
   }
 
   try {
@@ -186,10 +177,7 @@ export const getAndConfirmLatestTokenTransfer = async (
   | null
 > => {
   if (!connection) {
-    connection = new Connection(
-      "https://solana-devnet.g.alchemy.com/v2/ryTQis0V_mwGgV8HCAaP7PL0ouywGRJx",
-      "confirmed"
-    );
+    connection = new Connection(rpc_url, "confirmed");
   }
 
   try {
@@ -262,10 +250,7 @@ export const createAndExecuteJupyterSwap = async (
   connection?: Connection
 ) => {
   if (!connection) {
-    connection = new Connection(
-      "https://solana-devnet.g.alchemy.com/v2/ryTQis0V_mwGgV8HCAaP7PL0ouywGRJx",
-      "confirmed"
-    );
+    connection = new Connection(rpc_url, "confirmed");
   }
 
   for (const swap of swaps) {
