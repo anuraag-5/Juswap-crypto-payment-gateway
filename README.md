@@ -7,7 +7,7 @@ Connect your wallet on my website and then send token from other wallet to this 
 
 <br>
 
-But i recommend for fully testing and checking the swap read below.
+But i recommend for swap to work 100%, Read below
 
 
 ## Juswap-2 (API-Key Enabled)
