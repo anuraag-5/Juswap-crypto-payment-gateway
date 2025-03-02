@@ -1,6 +1,6 @@
 ## Juswap (Read carefully)
 
-This is the project which does not use `JUPITER_API_KEY` as i cannot afford 300 USDC a month 🙏 , as a result due to rate limiting factors the swap api may fail from JUPITER side. Although for your first look i have deployed the project at [Juswap](https://juswap.vercel.app). But i recommend for fully testing Read below.
+This is the project which does not use `JUPITER_API_KEY` as i cannot afford 300 USDC a month 🙏 , as a result due to rate limiting factors the swap api may fail from JUPITER side. Although for your first look and testing i have deployed the project at [Juswap](https://juswap.vercel.app). But i recommend for fully testing Read below.
 
 
 ## Juswap-2 (API-Key Enabled)
