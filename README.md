@@ -5,4 +5,6 @@ This is the project which does not use `JUPITER_API_KEY` as i cannot afford 300 
 
 ## Juswap-2 (API-Key Enabled)
 
-**I have created the same project twice here [Juswap-2](https://github.com/anuraag-5/Juswap-2)**, the difference is just that i have dockerized this app and you can pass `JUPITER_API_KEY` to fully test my app.
+**I have created the same project twice here [Juswap-2](https://github.com/anuraag-5/Juswap-2)**, the difference is just that i have dockerized this app and you can now pass `JUPITER_API_KEY` environment variable to fully test my app.
+
+Go to other readme [Juswap-2](https://github.com/anuraag-5/Juswap-2/blob/main/README.md)
