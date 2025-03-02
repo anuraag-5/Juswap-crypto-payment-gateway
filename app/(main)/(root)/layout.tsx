@@ -61,15 +61,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     setIsOpen(false);
   };
   useEffect(() => {
-    let retryDelay = 20000;
+    let retryDelay = 12000;
     const intervalId = setInterval(async () => {
       if (!publicKey) return;
       try {
         if (!initialFetchDone.current) {
           const fetchedLatestSignatures = await getLatestSignatures(publicKey);
           latestSignatures.current = fetchedLatestSignatures;
-          console.log(fetchedLatestSignatures);
-          console.log("i set signatures");
           initialFetchDone.current = true;
           return;
         }
@@ -77,6 +75,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         const fetchedLatestSignatures = await getLatestSignatures(publicKey);
         for (const fetchedLatestSignature of fetchedLatestSignatures) {
           let found: boolean = false;
+
           for (const latestSignature of latestSignatures.current) {
             if (
               fetchedLatestSignature.latestSignature ===
@@ -86,14 +85,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               break;
             }
           }
-          if (!found) {
-            /* This is a new signature */
 
-            // Confirm if transaction is not related to USDC.
+          if (!found) {
+
             if (fetchedLatestSignature.mint === outputMint) {
               return;
             }
-            // Check if token is received or sent.
+
             const latestTokenTransfers = await getAndConfirmLatestTokenTransfer(
               fetchedLatestSignature.latestSignature,
               fetchedLatestSignature.mint,
@@ -101,16 +99,14 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             );
 
             if (!latestTokenTransfers || latestTokenTransfers.length === 0) {
-              // No tokens recieved.
               return;
             }
+
             if (latestTokenTransfers === null) {
               console.log("Error fetching transaction details");
               return;
             }
 
-            // Confirmed Token Received
-            // Just iterate over every valid latestTokenTransfers and call jupiter's swap api it's easy.
             for (const latestTokenTransfer of latestTokenTransfers) {
               swaps.current.push({
                 inputMint: latestTokenTransfer.tokenMint,
@@ -122,7 +118,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           }
         }
         latestSignatures.current = fetchedLatestSignatures;
-        retryDelay = 20000;
+        retryDelay = 12000;
       } catch (error) {
         console.error("RPC Error:", error);
         retryDelay *= 2;

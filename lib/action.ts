@@ -45,7 +45,6 @@ export async function getWalletATAs(
 
     return ATAs;
   } catch (error: any) {
-    console.log(error.message);
     return [];
   }
 }
@@ -84,7 +83,6 @@ export const transferToken = async ({
     try {
       await getAccount(connection!, recipientTokenAccount);
     } catch (error) {
-      console.log("Recipient ATA not found, creating one...");
       transaction.add(
         createAssociatedTokenAccountInstruction(
           sender,
@@ -217,7 +215,6 @@ export const getAndConfirmLatestTokenTransfer = async (
         instruction.parsed.type === "transfer"
       ) {
         const parsedInstruction = instruction.parsed.info;
-        console.log(parsedInstruction);
 
         if (parsedInstruction.destination === ata) {
           const tokenMintAddress = mint;
