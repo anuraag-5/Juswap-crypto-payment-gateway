@@ -87,7 +87,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           }
 
           if (!found) {
-
             if (fetchedLatestSignature.mint === outputMint) {
               return;
             }
@@ -126,7 +125,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           retryDelay = 120000;
         }
       }
-      console.log("i ran");
     }, retryDelay);
 
     return () => clearInterval(intervalId);
